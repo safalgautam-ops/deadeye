@@ -1,15 +1,6 @@
-"use client";
-
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Github, Linkedin, Newspaper } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-const ROLE_PREFIX = "Cybersecurity ";
-const ROLE_WORDS = ["Student", "Enthusiast"];
+import { ArrowUpRight, Github, Linkedin, Mail, Newspaper } from "lucide-react";
+import GlitchAvatar from "../glitch-avatar";
+import { EMAIL, socials } from "../site-config";
 
 const PIXEL_FONT: Record<string, number[][]> = {
   D: [
@@ -44,165 +35,99 @@ const PIXEL_FONT: Record<string, number[][]> = {
 
 const DEADEYE_LETTERS = ["D", "E", "A", "D", "E", "Y", "E"];
 
-const socialLinks = [
-  {
-    label: "GitHub",
-    href: "https://github.com/safalgautam-ops",
-    Icon: Github,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/safalgautam09/",
-    Icon: Linkedin,
-  },
-  {
-    label: "Medium",
-    href: "https://medium.com/@safalgautam",
-    Icon: Newspaper,
-  },
+const socialIcons = { GitHub: Github, LinkedIn: Linkedin, Medium: Newspaper };
+
+const stats = [
+  { value: "5", label: "Top-5 competition finishes" },
+  { value: "1st", label: "Netanix 24h CTF" },
+  { value: "4", label: "Projects" },
+  { value: "3", label: "Certifications" },
 ];
 
 export default function HeroSection() {
-  const scope = useRef<HTMLElement>(null);
-  const [wordIndex, setWordIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    const currentWord = ROLE_WORDS[wordIndex];
-    const typingSpeed = isDeleting ? 45 : 90;
-    const pauseAtFull = 1400;
-    const pauseAtEmpty = 300;
-
-    const timer = setTimeout(() => {
-      if (!isDeleting && charIndex < currentWord.length) {
-        setCharIndex((prev) => prev + 1);
-        return;
-      }
-
-      if (!isDeleting && charIndex === currentWord.length) {
-        setIsDeleting(true);
-        return;
-      }
-
-      if (isDeleting && charIndex > 0) {
-        setCharIndex((prev) => prev - 1);
-        return;
-      }
-
-      setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % ROLE_WORDS.length);
-    }, !isDeleting && charIndex === currentWord.length
-      ? pauseAtFull
-      : isDeleting && charIndex === 0
-        ? pauseAtEmpty
-        : typingSpeed);
-
-    return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, wordIndex]);
-
-  useGSAP(
-    () => {
-      const timeline = gsap.timeline({
-        defaults: { ease: "power3.out" },
-      });
-
-      timeline.from("[data-gsap='heading']", {
-        y: 24,
-        opacity: 0,
-        duration: 0.75,
-        stagger: 0.1,
-      });
-
-      timeline.from(
-        "[data-gsap='social']",
-        {
-          y: 14,
-          opacity: 0,
-          scale: 0.94,
-          duration: 0.5,
-          ease: "power2.out",
-          stagger: 0.08,
-        },
-        "-=0.2",
-      );
-    },
-    { scope },
-  );
-
   return (
-    <section
-      id="home"
-      ref={scope}
-      className="relative isolate flex flex-col items-start gap-4 overflow-hidden py-16 text-left sm:gap-5 sm:py-24"
-    >
+    <section id="identity" className="relative scroll-mt-24 pb-12 pt-16 text-center sm:pb-16 sm:pt-24">
       <div
-        data-gsap="heading"
-        aria-hidden="true"
-        role="presentation"
-        className="z-10 hidden items-end gap-1 sm:flex md:gap-1.5"
-      >
-        {DEADEYE_LETTERS.map((letter, letterIndex) => (
-          <div
-            key={`${letter}-${letterIndex}`}
-            className="grid grid-cols-5 gap-[1.5px] md:gap-[2px]"
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-14 -z-10 mx-auto h-80 max-w-2xl bg-[radial-gradient(closest-side,oklch(0.66_0.235_29/0.14),transparent)]"
+      />
+
+      <div className="flex flex-col items-center">
+        <GlitchAvatar />
+
+        <div aria-hidden className="mt-8 flex items-end justify-center gap-[3px] sm:gap-1.5">
+          {DEADEYE_LETTERS.map((letter, letterIndex) => (
+            <div key={`${letter}-${letterIndex}`} className="grid grid-cols-5 gap-px sm:gap-[1.5px]">
+              {PIXEL_FONT[letter].flatMap((row, rowIndex) =>
+                row.map((cell, cellIndex) => (
+                  <span
+                    key={`${letterIndex}-${rowIndex}-${cellIndex}`}
+                    className={`h-1 w-1 sm:h-1.5 sm:w-1.5 ${cell ? "bg-live" : ""}`}
+                  />
+                )),
+              )}
+            </div>
+          ))}
+        </div>
+
+        <h1 className="mt-6 text-4xl font-semibold tracking-tight text-foreground sm:text-6xl">
+          Safal Gautam
+        </h1>
+        <p className="mt-3 text-lg text-muted-foreground sm:text-xl">Cybersecurity Enthusiast</p>
+
+        <p className="mt-5 whitespace-nowrap text-[clamp(11px,3.3vw,14px)] text-muted-foreground">
+          Focused on digital forensics and binary exploitation
+        </p>
+
+        <span className="mt-5 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs text-foreground">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-60" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-live" />
+          </span>
+          Open to work &amp; paid internships
+        </span>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
+          <a
+            href={`mailto:${EMAIL}`}
+            className="inline-flex items-center gap-2 rounded-md bg-live px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
-            {PIXEL_FONT[letter].flatMap((row, rowIndex) =>
-              row.map((cell, cellIndex) => (
-                <span
-                  key={`${letterIndex}-${rowIndex}-${cellIndex}`}
-                  className={`h-1.5 w-1.5 md:h-2 md:w-2 ${cell ? "bg-foreground" : ""}`}
-                />
-              )),
-            )}
+            <Mail className="h-4 w-4" />
+            Get in touch
+          </a>
+
+          {socials.map((social) => {
+            const Icon = socialIcons[social.label];
+            return (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-md border border-border px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:border-white/20 hover:text-foreground"
+              >
+                <Icon className="h-4 w-4" />
+                {social.label}
+                <ArrowUpRight className="h-3.5 w-3.5 opacity-50" />
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
+      <dl className="mt-14 grid grid-cols-2 overflow-hidden rounded-xl border border-border text-left sm:grid-cols-4">
+        {stats.map((stat, index) => (
+          <div
+            key={stat.label}
+            className={`flex flex-col-reverse gap-1 bg-card/40 p-4 sm:p-5 ${index % 2 === 1 ? "border-l border-border" : ""} ${
+              index >= 2 ? "border-t border-border sm:border-t-0" : ""
+            } ${index === 2 ? "sm:border-l" : ""}`}
+          >
+            <dt className="text-xs text-muted-foreground">{stat.label}</dt>
+            <dd className="text-2xl font-semibold tracking-tight text-foreground">{stat.value}</dd>
           </div>
         ))}
-      </div>
-      <p
-        data-gsap="heading"
-        className="z-10 font-mono text-xs tracking-[0.2em] text-muted-foreground sm:hidden"
-      >
-        [ deadeye ]
-      </p>
-
-      <p
-        data-gsap="heading"
-        className="z-10 font-mono text-xs text-muted-foreground before:text-muted-foreground/50 before:content-['$_'] sm:text-sm"
-      >
-        whoami
-      </p>
-
-      <h1
-        data-gsap="heading"
-        className="z-10 text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
-      >
-        Safal Gautam
-      </h1>
-
-      <p
-        data-gsap="heading"
-        className="z-10 font-mono text-xl text-muted-foreground sm:text-2xl"
-      >
-        {ROLE_PREFIX}
-        {ROLE_WORDS[wordIndex].slice(0, charIndex)}
-        <span className="ml-0.5 inline-block h-[0.85em] w-[2px] animate-pulse bg-muted-foreground align-[-2px]" />
-      </p>
-
-      <div className="z-10 mt-2 flex items-center gap-5 sm:mt-4">
-        {socialLinks.map(({ label, href, Icon }) => (
-          <a
-            key={label}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={label}
-            data-gsap="social"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <Icon className="h-5 w-5" strokeWidth={1.75} />
-          </a>
-        ))}
-      </div>
+      </dl>
     </section>
   );
 }
