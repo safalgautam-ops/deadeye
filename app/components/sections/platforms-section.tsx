@@ -1,44 +1,36 @@
+import { ArrowUpRight } from "lucide-react";
+import Section from "../section";
+
 const platforms = [
+  { name: "TryHackMe", handle: "d3adeye", href: "https://tryhackme.com/p/d3adeye" },
   {
-    key: "TRYHACKME",
-    label: "tryhackme.com/p/d3adeye",
-    href: "https://tryhackme.com/p/d3adeye",
-  },
-  {
-    key: "HACKTHEBOX",
-    label: "profile.hackthebox.com/profile/019c66bf-0b41-71de-b179-c23cc802c5e5",
+    name: "Hack The Box",
+    handle: "profile/019c66bf",
     href: "https://profile.hackthebox.com/profile/019c66bf-0b41-71de-b179-c23cc802c5e5",
   },
-  {
-    key: "CTFTIME",
-    label: "ctftime.org/team/437642",
-    href: "https://ctftime.org/team/437642",
-  },
+  { name: "CTFtime", handle: "team/437642", href: "https://ctftime.org/team/437642" },
 ];
 
-export default function PlatformsStatsSection() {
+export default function PlatformsSection() {
   return (
-    <section id="platforms" className="scroll-mt-24 py-12 md:py-16">
-      <p className="font-mono text-sm text-foreground before:text-muted-foreground/50 before:content-['$_cat_'] sm:text-base">
-        platforms-stats.sh
-      </p>
-
-      <div className="mt-6 rounded border border-border bg-card p-4 font-mono text-xs sm:text-sm md:mt-8">
+    <Section id="platforms">
+      <div className="grid gap-3 sm:grid-cols-3">
         {platforms.map((platform) => (
           <a
-            key={platform.key}
+            key={platform.name}
             href={platform.href}
             target="_blank"
-            rel="noreferrer"
-            title={platform.label}
-            className="block truncate py-1 transition-colors hover:text-foreground"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-between gap-3 rounded-xl border border-border bg-card/40 px-4 py-3.5 transition-colors hover:border-white/20 hover:bg-card"
           >
-            <span className="text-muted-foreground/70">{platform.key}</span>
-            <span className="text-muted-foreground">=</span>
-            <span className="text-foreground">&quot;{platform.label}&quot;</span>
+            <span className="min-w-0">
+              <span className="block text-sm font-medium text-foreground">{platform.name}</span>
+              <span className="block truncate font-mono text-xs text-muted-foreground">{platform.handle}</span>
+            </span>
+            <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-live" />
           </a>
         ))}
       </div>
-    </section>
+    </Section>
   );
 }

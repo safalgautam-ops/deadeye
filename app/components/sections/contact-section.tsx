@@ -1,28 +1,25 @@
-import { ArrowUpRight } from "lucide-react";
+import { Mail } from "lucide-react";
+import Section from "../section";
+import { EMAIL } from "../site-config";
 
-export default function ContactsSection() {
+export default function ContactSection() {
   return (
-    <section id="contacts" className="scroll-mt-24 py-12 md:py-16">
-      <p className="mb-6 font-mono text-sm text-foreground before:text-muted-foreground/50 before:content-['$_cat_'] sm:mb-8 sm:text-base">
-        contact.txt
-      </p>
-
-      <article className="rounded border border-border bg-card p-5 sm:p-7 lg:p-8">
-        <p className="max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base md:text-lg">
-          Open to internships, freelance opportunities, and cybersecurity collaborations.
-          If you are building something meaningful, lets connect.
+    <Section id="contact">
+      <div className="rounded-xl border border-border bg-card/40 px-6 py-10 text-center sm:px-10">
+        <h3 className="text-2xl font-semibold tracking-tight text-foreground">Let&apos;s work together</h3>
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+          Open to internships, freelance opportunities, and cybersecurity collaborations. If you are
+          building something meaningful, let&apos;s connect.
         </p>
 
-        <div className="mt-6 flex flex-wrap gap-2.5 sm:mt-8 sm:gap-3">
-          <a
-            href="mailto:gtmsafal09@gmail.com"
-            className="inline-flex items-center gap-2 rounded bg-primary px-4 py-2 font-mono text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:px-5 sm:py-2.5 sm:text-sm"
-          >
-            email me
-            <ArrowUpRight className="h-4 w-4" />
-          </a>
-        </div>
-      </article>
-    </section>
+        <a
+          href={`mailto:${EMAIL}`}
+          className="mt-6 inline-flex items-center gap-2 rounded-md bg-live px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        >
+          <Mail className="h-4 w-4" />
+          {EMAIL}
+        </a>
+      </div>
+    </Section>
   );
 }

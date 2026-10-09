@@ -1,85 +1,60 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import Section from "../section";
+import { useReveal } from "../use-reveal";
 
 const events = [
   {
-    title: "Attended the 13th Anniversary Conference & Meetup of Pentester Nepal",
-    description: "A full-day cybersecurity conference bringing together security professionals, students, researchers, and enthusiasts from across Nepal. The event featured technical talks from industry experts, community recognition awards, and networking sessions that highlighted the continued growth of Nepal's cybersecurity community.",
-    date: "August 2026",
+    role: "Attended",
+    title: "13th Anniversary Conference & Meetup — Pentester Nepal",
+    date: "Aug 2026",
+    description:
+      "A full-day cybersecurity conference bringing together security professionals, students, researchers, and enthusiasts from across Nepal. The event featured technical talks from industry experts, community recognition awards, and networking sessions that highlighted the continued growth of Nepal's cybersecurity community.",
   },
   {
-    title: "Attended the 8th OWASP Kathmandu Chapter Event",
-    description: "Explored key areas of web application security, ethical hacking, and bug bounty hunting through sessions led by experienced security researchers, gaining insight into practical vulnerability discovery and responsible disclosure practices.",
-    date: "April 2026",
+    role: "Attended",
+    title: "8th OWASP Kathmandu Chapter Event",
+    date: "Apr 2026",
+    description:
+      "Explored key areas of web application security, ethical hacking, and bug bounty hunting through sessions led by experienced security researchers, gaining insight into practical vulnerability discovery and responsible disclosure practices.",
   },
   {
-    title: "Conducted Cyber Hygiene and Online Safety Awareness Program",
-    description: "Delivered interactive awareness sessions for grade 8 and 9 students across various districts of Nepal, helping them recognize online risks, safeguard their digital identities, and understand how common cyberattacks unfold.",
-    date: "2024/2025/2026",
+    role: "Conducted",
+    title: "Cyber Hygiene & Online Safety Awareness Program",
+    date: "2024–2026",
+    description:
+      "Delivered interactive awareness sessions for grade 8 and 9 students across various districts of Nepal, helping them recognize online risks, safeguard their digital identities, and understand how common cyberattacks unfold.",
   },
 ];
 
-export default function EventsSection() {
-  const scope = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      gsap.utils.toArray<HTMLElement>("[data-events-item]").forEach((item) => {
-        gsap.fromTo(
-          item,
-          { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 88%",
-              end: "top 42%",
-              scrub: 0.7,
-            },
-          },
-        );
-      });
-    },
-    { scope },
-  );
+export default function CommunitySection() {
+  const scope = useReveal<HTMLOListElement>();
 
   return (
-    <section
-      id="events"
-      ref={scope}
-      className="scroll-mt-24 py-12 md:py-16"
-    >
-      <p className="mb-7 font-mono text-sm text-foreground before:text-muted-foreground/50 before:content-['$_cat_'] sm:text-base">
-        events.txt
-      </p>
-
-      <div className="border-t border-border">
+    <Section id="community">
+      <ol ref={scope} className="divide-y divide-border">
         {events.map((event) => (
-          <article
-            key={event.title}
-            data-events-item
-            className="grid grid-cols-1 gap-1 border-b border-border py-4 sm:grid-cols-[1fr_auto] sm:items-baseline sm:gap-3 sm:py-5 md:gap-4 md:py-6"
-          >
-            <h3 className="text-base font-semibold leading-snug text-foreground sm:text-lg md:text-xl">
-              {event.title}
-            </h3>
-            <p className="font-mono text-xs text-muted-foreground sm:text-sm">
-              {event.date}
-            </p>
-            <p className="text-sm leading-relaxed text-muted-foreground sm:col-span-2 sm:text-base">
+          <li key={event.title} data-reveal className="py-5 first:pt-1">
+            <div className="flex items-center justify-between gap-3">
+              <span
+                className={`rounded-full border px-2.5 py-0.5 text-xs ${
+                  event.role === "Conducted"
+                    ? "border-live/40 bg-live/10 text-live"
+                    : "border-border text-muted-foreground"
+                }`}
+              >
+                {event.role}
+              </span>
+              <span className="font-mono text-xs text-muted-foreground tabular-nums">{event.date}</span>
+            </div>
+
+            <h3 className="mt-3 font-medium text-foreground">{event.title}</h3>
+            <p className="mt-1.5 max-w-prose text-sm leading-relaxed text-muted-foreground">
               {event.description}
             </p>
-          </article>
+          </li>
         ))}
-      </div>
-    </section>
+      </ol>
+    </Section>
   );
 }

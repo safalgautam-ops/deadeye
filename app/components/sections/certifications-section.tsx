@@ -1,84 +1,74 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import { ArrowUpRight } from "lucide-react";
+import Section from "../section";
+import { useReveal } from "../use-reveal";
 
 const certifications = [
   {
-    title: "Blue Team Fundamentals (BTF)",
-    platform: "CyberWarfare Labs",
-    year: "August 2026",
+    code: "BTF",
+    title: "Blue Team Fundamentals",
+    issuer: "CyberWarfare Labs",
+    date: "Aug 2026",
+    href: "https://labs.cyberwarfare.live/credential/achievement/6a70debd8aed14e94c97581f",
   },
   {
-    title: "Cybersecurity Red Team Analyst (CRTA)",
-    platform: "CyberWarfare Labs",
-    year: "March 2026",
+    code: "CRTA",
+    title: "Certified Red Team Analyst",
+    issuer: "CyberWarfare Labs",
+    date: "Mar 2026",
+    href: "https://labs.cyberwarfare.live/credential/achievement/69b237a2f598fb51b71b56cc",
   },
   {
+    code: null,
     title: "Introduction to Cybersecurity",
-    platform: "Cisco Networking Academy",
-    year: "January 2025",
+    issuer: "Cisco Networking Academy",
+    date: "Jan 2025",
+    href: "https://www.credly.com/badges/edcdc0f0-1433-4d90-8b45-9e6425de74d3/public_url",
   },
 ];
 
 export default function CertificationsSection() {
-  const scope = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      gsap.utils.toArray<HTMLElement>("[data-cert-row]").forEach((row) => {
-        gsap.fromTo(
-          row,
-          { opacity: 0, y: 24 },
-          {
-            opacity: 1,
-            y: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: row,
-              start: "top 90%",
-              end: "top 42%",
-              scrub: 0.7,
-            },
-          },
-        );
-      });
-    },
-    { scope },
-  );
+  const scope = useReveal<HTMLUListElement>();
 
   return (
-    <section
-      id="certifications"
-      ref={scope}
-      className="scroll-mt-24 py-12 md:py-16"
-    >
-      <p className="font-mono text-sm text-foreground before:text-muted-foreground/50 before:content-['$_cat_'] sm:text-base">
-        certifications.txt
-      </p>
-
-      <div className="mt-6 border-t border-border md:mt-8">
+    <Section id="certifications">
+      <ul ref={scope} className="divide-y divide-border">
         {certifications.map((item) => (
-          <article
-            key={item.title}
-            data-cert-row
-            className="grid grid-cols-1 gap-1 border-b border-border py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-3 sm:py-5 md:gap-4 md:py-6"
-          >
-            <div className="space-y-1">
-              <h3 className="text-base font-semibold leading-snug text-foreground sm:text-lg md:text-xl">
-                {item.title}
-              </h3>
-              <p className="text-sm text-muted-foreground sm:text-base">{item.platform}</p>
-            </div>
+          <li key={item.title} data-reveal>
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Verify ${item.title} credential (opens in a new tab)`}
+              className="group -mx-3 flex items-center gap-4 rounded-lg px-3 py-4 transition-colors hover:bg-card/60"
+            >
+              <span
+                className={`flex h-10 w-12 shrink-0 items-center justify-center rounded-md border font-mono text-xs ${
+                  item.code
+                    ? "border-live/40 bg-live/10 text-live"
+                    : "border-border text-muted-foreground/50"
+                }`}
+              >
+                {item.code ?? "—"}
+              </span>
 
-            <p className="font-mono text-xs text-muted-foreground sm:text-sm">{item.year}</p>
-          </article>
+              <span className="min-w-0 flex-1">
+                <span className="block font-medium text-foreground">{item.title}</span>
+                <span className="block text-sm text-muted-foreground">{item.issuer}</span>
+              </span>
+
+              <span className="flex shrink-0 flex-col items-end gap-1">
+                <span className="font-mono text-xs text-muted-foreground tabular-nums">{item.date}</span>
+                <span className="flex items-center gap-1 text-xs text-muted-foreground transition-colors group-hover:text-live">
+                  Verify
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </span>
+              </span>
+            </a>
+          </li>
         ))}
-      </div>
-    </section>
+      </ul>
+    </Section>
   );
 }
