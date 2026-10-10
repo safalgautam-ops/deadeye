@@ -1,3 +1,3 @@
 # Safal Gautam — Portfolio
 
-A dark, terminal-inspired personal portfolio built with Next.js, showcasing cybersecurity projects, events, achievements, and certifications.
+A dark, minimal personal portfolio built with Next.js, showcasing cybersecurity operations, projects, certifications, and community work.
