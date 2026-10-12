@@ -23,7 +23,8 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         return;
       }
 
-      if (event.key === "?") {
+      // Match the physical key too, so it works with or without Shift.
+      if (event.key === "?" || event.code === "Slash") {
         event.preventDefault();
         toggleHelp();
         return;

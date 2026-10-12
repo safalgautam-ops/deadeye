@@ -72,9 +72,10 @@ export default function IntroOverlay() {
         .call(() => glitch?.classList.remove("glitch-frantic"));
     };
 
-    const start = performance.now();
+    // performance.now() counts from navigation start; the overlay is server-rendered and
+    // visible from first paint, so time spent loading JS already counts toward the minimum.
     const ticker = setInterval(() => {
-      const timeShare = Math.min((performance.now() - start) / minMs, 1);
+      const timeShare = Math.min(performance.now() / minMs, 1);
       const next = loaded ? timeShare : Math.min(timeShare, 0.99);
       setProgress(next);
 
