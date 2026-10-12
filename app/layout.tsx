@@ -15,10 +15,34 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const title = "Safal Gautam — Cybersecurity Enthusiast";
+const description =
+  "Safal Gautam (deadeye), a cybersecurity enthusiast from Nepal focused on digital forensics and binary exploitation. CTF placings, projects, writeups, and certifications.";
+const shareImage = {
+  url: "/og.png",
+  width: 2400,
+  height: 1260,
+  alt: "Safal Gautam (deadeye) — Cybersecurity Enthusiast",
+};
+
 export const metadata: Metadata = {
-  title: "Safal Gautam — Cybersecurity Enthusiast",
-  description:
-    "Safal Gautam (deadeye), a cybersecurity enthusiast from Nepal focused on digital forensics and binary exploitation. CTF placings, projects, and certifications.",
+  metadataBase: new URL("https://www.safal-gautam.com.np"),
+  title,
+  description,
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "Safal Gautam",
+    title,
+    description,
+    images: [shareImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: [shareImage],
+  },
 };
 
 // Without JS the intro never finishes, so drop it and show the hero logo.
