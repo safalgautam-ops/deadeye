@@ -1,4 +1,7 @@
 import { ArrowUpRight, Github, Linkedin, Mail, Newspaper } from "lucide-react";
+import { achievements } from "../../content/achievements";
+import { certifications } from "../../content/certifications";
+import { projects } from "../../content/projects";
 import GlitchAvatar from "../glitch-avatar";
 import { EMAIL, socials } from "../site-config";
 
@@ -38,10 +41,10 @@ const DEADEYE_LETTERS = ["D", "E", "A", "D", "E", "Y", "E"];
 const socialIcons = { GitHub: Github, LinkedIn: Linkedin, Medium: Newspaper };
 
 const stats = [
-  { value: "5", label: "Top-5 competition finishes" },
+  { value: String(achievements.filter((item) => item.rank <= 5).length), label: "Top-5 competition finishes" },
   { value: "1st", label: "Netanix 24h CTF" },
-  { value: "4", label: "Projects" },
-  { value: "3", label: "Certifications" },
+  { value: String(projects.length), label: "Projects" },
+  { value: String(certifications.length), label: "Certifications" },
 ];
 
 export default function HeroSection() {
@@ -84,7 +87,7 @@ export default function HeroSection() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-live opacity-60" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-live" />
           </span>
-          Open to work &amp; paid internships
+          Open to work
         </span>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">

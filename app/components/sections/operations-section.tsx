@@ -1,17 +1,8 @@
 "use client";
 
+import { achievements, ordinal } from "../../content/achievements";
 import Section from "../section";
 import { useReveal } from "../use-reveal";
-
-const achievements = [
-  { rank: 3, event: "Pentester Nepal 13th Anniversary CTF", scope: "National CTF", date: "Aug 2026" },
-  { rank: 2, event: "Kavach", scope: "Inter-college CTF", date: "Jul 2026" },
-  { rank: 5, event: "Hackastra", scope: "National CTF", date: "May–Jun 2026" },
-  { rank: 1, event: "Netanix", scope: "Softwarica 24-hour CTF", date: "May 2026" },
-  { rank: 2, event: "TriKode Hackathon 2026", scope: "Intra-college hackathon · Softwarica", date: "Jan 2026" },
-];
-
-const ordinal = (n: number) => `${n}${n === 1 ? "st" : n === 2 ? "nd" : n === 3 ? "rd" : "th"}`;
 
 export default function OperationsSection() {
   const scope = useReveal<HTMLUListElement>();

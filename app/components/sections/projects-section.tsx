@@ -1,39 +1,9 @@
 "use client";
 
 import { ArrowUpRight, Github } from "lucide-react";
+import { projects } from "../../content/projects";
 import Section from "../section";
 import { useReveal } from "../use-reveal";
-
-const projects = [
-  {
-    name: "os-ground-up",
-    summary: "OS internals in C",
-    tag: "OS · C",
-    date: "2026",
-    href: "https://github.com/safalgautam-ops/os-ground-up",
-  },
-  {
-    name: "Nirikshan OS",
-    summary: "Browser-based DFIR workstation",
-    tag: "DFIR",
-    date: "Jun–Jul 2026",
-    href: "https://github.com/safalgautam-ops/NirikshanOS",
-  },
-  {
-    name: "LLM Security Command Center",
-    summary: null,
-    tag: "AI security",
-    date: "Jan 2026",
-    href: null,
-  },
-  {
-    name: "Encapsula",
-    summary: "Steganography toolkit with TUI and CLI",
-    tag: "Steganography",
-    date: "Jun 2025",
-    href: "https://github.com/safalgautam-ops/Encapsula",
-  },
-];
 
 export default function ProjectsSection() {
   const scope = useReveal<HTMLDivElement>();
@@ -51,9 +21,7 @@ export default function ProjectsSection() {
                 )}
               </div>
 
-              {project.summary && (
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{project.summary}</p>
-              )}
+              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{project.summary}</p>
 
               <div className="mt-auto flex items-center justify-between gap-3 pt-5 text-xs">
                 <span className="rounded-full border border-border px-2 py-0.5 text-muted-foreground">

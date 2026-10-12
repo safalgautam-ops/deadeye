@@ -1,32 +1,10 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { certifications } from "../../content/certifications";
 import Section from "../section";
 import { useReveal } from "../use-reveal";
-
-const certifications = [
-  {
-    code: "BTF",
-    title: "Blue Team Fundamentals",
-    issuer: "CyberWarfare Labs",
-    date: "Aug 2026",
-    href: "https://labs.cyberwarfare.live/credential/achievement/6a70debd8aed14e94c97581f",
-  },
-  {
-    code: "CRTA",
-    title: "Certified Red Team Analyst",
-    issuer: "CyberWarfare Labs",
-    date: "Mar 2026",
-    href: "https://labs.cyberwarfare.live/credential/achievement/69b237a2f598fb51b71b56cc",
-  },
-  {
-    code: null,
-    title: "Introduction to Cybersecurity",
-    issuer: "Cisco Networking Academy",
-    date: "Jan 2025",
-    href: "https://www.credly.com/badges/edcdc0f0-1433-4d90-8b45-9e6425de74d3/public_url",
-  },
-];
 
 export default function CertificationsSection() {
   const scope = useReveal<HTMLUListElement>();
@@ -44,18 +22,27 @@ export default function CertificationsSection() {
               className="group -mx-3 flex items-center gap-4 rounded-lg px-3 py-4 transition-colors hover:bg-card/60"
             >
               <span
-                className={`flex h-10 w-12 shrink-0 items-center justify-center rounded-md border font-mono text-xs ${
-                  item.code
-                    ? "border-live/40 bg-live/10 text-live"
-                    : "border-border text-muted-foreground/50"
-                }`}
+                className={`relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-border bg-white/[0.04] ${item.issuer.padding}`}
               >
-                {item.code ?? "—"}
+                <Image
+                  src={item.issuer.logo}
+                  alt={`${item.issuer.name} logo`}
+                  width={88}
+                  height={88}
+                  className="h-full w-full object-contain"
+                />
               </span>
 
               <span className="min-w-0 flex-1">
-                <span className="block font-medium text-foreground">{item.title}</span>
-                <span className="block text-sm text-muted-foreground">{item.issuer}</span>
+                <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span className="font-medium text-foreground">{item.title}</span>
+                  {item.code && (
+                    <span className="rounded border border-border px-1.5 py-px font-mono text-[11px] text-muted-foreground">
+                      {item.code}
+                    </span>
+                  )}
+                </span>
+                <span className="block text-sm text-muted-foreground">{item.issuer.name}</span>
               </span>
 
               <span className="flex shrink-0 flex-col items-end gap-1">
