@@ -6,6 +6,7 @@ import OperationsSection from "./components/sections/operations-section";
 import PlatformsSection from "./components/sections/platforms-section";
 import ProjectsSection from "./components/sections/projects-section";
 import RoutineSection from "./components/sections/routine-section";
+import WriteupsSection from "./components/sections/writeups-section";
 import SiteShell from "./components/site-shell";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <HeroSection />
       <OperationsSection />
       <ProjectsSection />
+      <WriteupsSection />
       <CertificationsSection />
       <PlatformsSection />
       <RoutineSection />
